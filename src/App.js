@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import Ticket from "./Ticket.js";
+import Form from "./Form.js";
 
 const styles = {
   container: {
@@ -29,20 +31,19 @@ class App extends Component {
       {
         id: id++,
         desc: 'Make this work',
-        status: 'todo'
+        status: 'done'
+      },
+      {
+        id: id++,
+        desc: 'Meeting at 1PM',
+        status: 'close'
       }
     ]
   };
   render() {    
     return (
       <div>
-        <input 
-          type="text"
-          style={{ borderRadius: "3px" }}
-        />
-        <button style={{ cursor: "pointer" }}>
-          ADD
-        </button>
+        <Form ticketAdd={this.handleTicketAdd.bind(this)} />
         <br />
         <br />
         <div style={styles.container}>
@@ -50,22 +51,51 @@ class App extends Component {
             <label style={styles.box.label}>IN-PROGRESS</label>
             {
               this.state.tickets.map(ticket => {
-               return <Ticket info={ticket} />
+                if(ticket.status == 'todo') {
+                  return <Ticket 
+                    desc2={ticket.desc}
+                    status={ticket.status} />
+                }
               })
             }
 
           </div> 
           <div style={styles.box}>
             <label style={styles.box.label}>DONE</label>
-            {/** show Done tickets below */}
+            {
+              this.state.tickets.map(ticket => {
+                if(ticket.status == 'done') {
+                  return <Ticket 
+                    desc2={ticket.desc}
+                    status={ticket.status} />
+                }
+              })
+            }
           </div>
           <div style={styles.box}>
             <label style={styles.box.label}>CLOSE</label>
-            {/** show Close tickets below */}
+            {
+              this.state.tickets.map(ticket => {
+                if(ticket.status == 'close') {
+                  return <Ticket 
+                    desc2={ticket.desc}
+                    status={ticket.status} />
+                }
+              })
+            }
           </div>
         </div>
       </div>
     );
+  }
+  handleTicketAdd(desc) {
+    var newTicket = {
+        id: id++,
+        desc: desc,
+        status: 'todo'
+    }
+    this.setState({tickets: this.state.tickets.concat(newTicket)});
+    console.log(this.state.tickets);
   }
 }
 

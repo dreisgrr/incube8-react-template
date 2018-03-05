@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import Button from "./Button.js";
+
 const styles = {
   ticket: {
     border: "1px solid #ccc",
@@ -23,19 +25,24 @@ class Ticket extends Component {
 
   render() {
     const { desc } = this.props;
-    console.log(this.props.info);
+    var desc2 = this.props.desc2;
+    var status = this.props.status
+    var btnDisplay = '';
+    if(status != 'close') {
+      btnDisplay = 
+        <Button status={status} />
+    }
+
     return (
       <div style={styles.ticket}>
         {/* Ticket description */}
-        <div>{this.props.info.desc}</div>
+        <div>{desc2}</div>
         {/* Ticket actions [Done/Not Fix/Close]. Modify to display them properly */}
         <div>
-          <button>Done</button>
-          <button>Not Fix</button>
-          <button>Close</button>
+          {btnDisplay}
         </div>
       </div>
-    );
+    )
   }
 }
 
