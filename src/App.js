@@ -53,8 +53,8 @@ class App extends Component {
               this.state.tickets.map(ticket => {
                 if(ticket.status == 'todo') {
                   return <Ticket 
-                    desc2={ticket.desc}
-                    status={ticket.status} />
+                    ticket={ticket}
+                    updateStatus={this.handleUpdateStatus.bind(this)} />
                 }
               })
             }
@@ -66,8 +66,8 @@ class App extends Component {
               this.state.tickets.map(ticket => {
                 if(ticket.status == 'done') {
                   return <Ticket 
-                    desc2={ticket.desc}
-                    status={ticket.status} />
+                    ticket={ticket}
+                    updateStatus={this.handleUpdateStatus.bind(this)} />
                 }
               })
             }
@@ -78,8 +78,8 @@ class App extends Component {
               this.state.tickets.map(ticket => {
                 if(ticket.status == 'close') {
                   return <Ticket 
-                    desc2={ticket.desc}
-                    status={ticket.status} />
+                    ticket={ticket}
+                    updateStatus={this.handleUpdateStatus.bind(this)} />
                 }
               })
             }
@@ -95,7 +95,24 @@ class App extends Component {
         status: 'todo'
     }
     this.setState({tickets: this.state.tickets.concat(newTicket)});
-    console.log(this.state.tickets);
+  }
+  handleUpdateStatus(btnAction, ticket) {
+    var tickets = this.state.tickets;
+    
+    for (var i=0; i < tickets.length; i++) {
+      if(tickets[i].id == ticket.id){
+        if(btnAction == 'Done') {
+          tickets[i].status = 'done';
+        }
+        if(btnAction == 'Not Fix') {
+          tickets[i].status = 'todo';
+        }
+        if(btnAction == 'Close') {
+          tickets[i].status = 'close';
+        }
+      }
+    }
+    this.setState({tickets: tickets});
   }
 }
 

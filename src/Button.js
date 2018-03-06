@@ -1,25 +1,40 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class Button extends Component {
 
+
+
+class Button extends Component {
+	constructor(props){
+		super(props);
+	}
 
 	render() {
-		var status = this.props.status;
+    	var ticket = this.props.ticket;
 		var btnText = '';
-		if(status == 'todo') {
+		if(this.props.status == 'todo') {
 			btnText = 'Done';
 		}
-		if(status == 'done') {
+		if(this.props.status == 'done') {
 			btnText = 'Not Fix';
 		}
-
 		return (
 			<div>
-				<button>{btnText}</button>
-				<button>Close</button>
+				<button ref="btn" onClick={this.handleOnClick.bind(this, ticket)}>{btnText}</button>
+				<button ref="btn" onClick={this.handleOnClose.bind(this, ticket)}>Close</button>
 			</div>
 		)
+	}
+	handleOnClick(ticket) {
+		if(ticket.status == 'todo') {
+			this.props.btnAction("Done", ticket);
+		} 
+		else {
+			this.props.btnAction("Not Fix", ticket);
+		}
+	}
+	handleOnClose(ticket) {
+		this.props.btnAction("Close", ticket);
 	}
 }
 

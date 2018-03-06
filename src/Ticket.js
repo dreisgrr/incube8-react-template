@@ -25,24 +25,26 @@ class Ticket extends Component {
 
   render() {
     const { desc } = this.props;
-    var desc2 = this.props.desc2;
-    var status = this.props.status
+    var ticket = this.props.ticket;
     var btnDisplay = '';
-    if(status != 'close') {
+    if(ticket.status != 'close') {
       btnDisplay = 
-        <Button status={status} />
+        <Button ticket={ticket} status={ticket.status} btnAction={this.handleBtnAction.bind(this)}/>
     }
 
     return (
       <div style={styles.ticket}>
         {/* Ticket description */}
-        <div>{desc2}</div>
+        <div>{ticket.desc}</div>
         {/* Ticket actions [Done/Not Fix/Close]. Modify to display them properly */}
         <div>
           {btnDisplay}
         </div>
       </div>
     )
+  }
+  handleBtnAction(btnAction, ticket) {
+    this.props.updateStatus(btnAction, ticket);
   }
 }
 
