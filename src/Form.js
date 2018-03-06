@@ -54,6 +54,10 @@ class Form extends Component {
 		}.bind(this), 2000);
 	}
 	addTicket() {
+		if(!this.refs.text.value.trim()) {
+			alert("Cannot input empty string!");
+			return;
+		}
 		this.props.ticketAdd(this.refs.text.value);
 		console.log(desc);
 		this.refs.text.value = '';

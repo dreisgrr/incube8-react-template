@@ -31,14 +31,15 @@ class App extends Component {
       {
         id: id++,
         desc: 'Make this work',
-        status: 'done'
+        status: 'todo'
       },
       {
         id: id++,
         desc: 'Meeting at 1PM',
-        status: 'close'
+        status: 'todo'
       }
-    ]
+    ],
+    cancel: 0
   };
   render() {    
     return (
@@ -103,9 +104,11 @@ class App extends Component {
       if(tickets[i].id == ticket.id){
         if(btnAction == 'Done') {
           tickets[i].status = 'done';
+          this.state.cancel = 0;
         }
         if(btnAction == 'Not Fix') {
           tickets[i].status = 'todo';
+          this.state.cancel = 1;
         }
         if(btnAction == 'Close') {
           tickets[i].status = 'close';
@@ -113,6 +116,21 @@ class App extends Component {
       }
     }
     this.setState({tickets: tickets});
+    console.log(ticket.status);
+    console.log(ticket.id);
+    if(ticket.status == 'done'){
+      this.ticketClose(ticket);
+    }
+  }
+
+  ticketClose(ticket) {
+    setTimeout(function() {
+      if(this.state.cancel) {
+        return;
+      }
+      this.handleUpdateStatus('Close', ticket)
+      console.log('CLOSED');
+    }.bind(this), 5000);
   }
 }
 
